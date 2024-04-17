@@ -3,6 +3,7 @@
 
 import json
 import os
+import random
 from pathlib import Path
 
 
@@ -28,9 +29,12 @@ class CommentBuilder:
                 except Exception as e:
                     print(e)
                     print(
-                        f"Could not read {self.comments_file}, make sure that .json has no errors, default comments have been selected"
+                        f"Could not read {self.comments_file}, default comments selected"
                     )
         return self.generic_comment()
 
     def generic_comment(self):
         return ["Fix( comments.json is not working, fix it )"]
+
+    def comment(self):
+        return random.choice(self.comments)
