@@ -14,4 +14,6 @@ class GitBuilder(CommentBuilder):
         query_to_send = query + " " + files
         os.system(query_to_send)
 
-    def commit(self, query="git commit")
+    def commit(self, message: str):
+        query_to_send = f"git commit -m {message}"
+        os.system(query_to_send)
