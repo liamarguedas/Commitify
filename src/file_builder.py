@@ -29,7 +29,7 @@ class FileBuilder:
         return os.path.exists(f"{dirname}/{self.filename}")
 
     def generate_name(self):
-        self.filename = None
+        self.filename = f"{random.choice(self.words)}.{self.filetype}"
         return self.filename
 
     def txt_file_exists(self):
@@ -49,7 +49,7 @@ class FileBuilder:
 
         if self.path_exists(dirname):
 
-            file = f"{random.choice(self.words)}.{self.filetype}"
+            file = self.generate_name()
 
-            if self.file_in_path(file):
+            if self.file_in_path(dirname):
                 file = self.generate_extra_file(file)
