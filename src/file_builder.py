@@ -19,5 +19,5 @@ class FileBuilder:
             return [line.rstrip("\n") for line in text_file]
         return ["file"]
 
-
-    def create_file(self)
+    def create_file(self):
+        pass
