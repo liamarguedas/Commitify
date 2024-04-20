@@ -4,12 +4,16 @@ import os
 
 
 class FileBuilder:
+
     def __init__(self, filetype="py"):
         self.filetype = filetype
         self.filepath = Path(__file__)
         self.txt_path = self.filepath / "txt"
-        self.txt_file = self.txt_path / "random_words.txt"
-        self.words = self.read_text()
+        self.words_file = self.txt_path / "random_words.txt"
+        self.file_txt = self.txt_path / "file_txt.txt"
+        self.words = self.read_text(self.words_file)
+        self.file_text = self.read_text(self.file_txt)
+        self.filename = None
 
     @staticmethod
     def path_exists(dirname):
@@ -25,6 +29,13 @@ class FileBuilder:
         ]
         return f"{_splited_file[0]}{len(same_name_files) + 1}.{_splited_file[1]}"
 
+    @staticmethod
+    def write_new_file(filename):
+        file = open(filename, "w")
+        for line in self.file_text:
+            file.write(line)
+        file.close()
+
     def file_in_path(self, dirname):
         return os.path.exists(f"{dirname}/{self.filename}")
 
@@ -32,24 +43,16 @@ class FileBuilder:
         self.filename = f"{random.choice(self.words)}.{self.filetype}"
         return self.filename
 
-    def txt_file_exists(self):
-        return os.path.exists(self.txt_file)
-
-    def read_text(self):
-
-        if self.txt_file_exists():
-
-            with open(self.txt_file, "r", encoding="utf-8") as file:
-
+    def read_text(self, file):
+        if self.path_exists(file):
+            with open(file, "r", encoding="utf-8") as file:
                 text_file = file.readlines()
                 return [line.rstrip("\n") for line in text_file]
         return ["file"]
 
     def create_file(self, dirname: str):
-
         if self.path_exists(dirname):
-
             file = self.generate_name()
-
             if self.file_in_path(dirname):
-                file = self.generate_extra_file(file)
+                file = self.generate_extra_file(file, dirname)
+            self.write_new_file(file)
