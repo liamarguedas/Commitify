@@ -17,10 +17,12 @@ class FileBuilder:
 
     @staticmethod
     def path_exists(dirname):
+        """TODO"""
         return os.path.exists(dirname)
 
     @staticmethod
     def generate_extra_file(file, dirname):
+        """TODO"""
         _splited_file = file.split(".")
         same_name_files = [
             directory_file
@@ -31,26 +33,30 @@ class FileBuilder:
 
     @staticmethod
     def write_new_file(filename):
-        file = open(filename, "w")
-        for line in self.file_text:
-            file.write(line)
-        file.close()
+        """TODO"""
+        with open(filename, "w", encoding="utf-8") as file:
+            for line in file:
+                file.write(line)
 
     def file_in_path(self, dirname):
+        """TODO"""
         return os.path.exists(f"{dirname}/{self.filename}")
 
     def generate_name(self):
+        """TODO"""
         self.filename = f"{random.choice(self.words)}.{self.filetype}"
         return self.filename
 
     def read_text(self, file):
+        """TODO"""
         if self.path_exists(file):
-            with open(file, "r", encoding="utf-8") as file:
-                text_file = file.readlines()
-                return [line.rstrip("\n") for line in text_file]
+            with open(file, "r", encoding="utf-8") as loaded_file:
+                return [line.rstrip("\n") for line in loaded_file.readlines()]
+
         return ["file"]
 
     def create_file(self, dirname: str):
+        """TODO"""
         if self.path_exists(dirname):
             file = self.generate_name()
             if self.file_in_path(dirname):
