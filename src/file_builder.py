@@ -52,7 +52,6 @@ class FileBuilder:
         if self.path_exists(file):
             with open(file, "r", encoding="utf-8") as loaded_file:
                 return [line.rstrip("\n") for line in loaded_file.readlines()]
-
         return ["file"]
 
     def create_file(self, dirname: str):
