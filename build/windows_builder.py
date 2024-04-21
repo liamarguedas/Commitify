@@ -26,6 +26,9 @@ class WinBuilt:
         """TODO"""
         return os.path.exists(self.root_dir / self.foldername)
 
+    def init_repo(self, repo):
+        pass
+
     def set_root(self):
         """TODO"""
         if not self.commitify_exists():
@@ -34,3 +37,6 @@ class WinBuilt:
     def set_startup(self, file):
         """TODO"""
         shutil.move(self.commitify_folder / file, self.startup_dir)
+
+    def set_files(self):
+        pass

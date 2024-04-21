@@ -20,7 +20,7 @@ class CommitifyConfig:
             "file": self.file,
         }
 
-    def ask_configs(self):
+    def ask_configs(self, return_repo=False):
         """TODO"""
         try:
             self.repository = input("Repository URL: ")
@@ -41,6 +41,8 @@ class CommitifyConfig:
             print(f"could not save configs, using defaults: {self.default_settings}")
             self.repository = input("Repository URL: ")
         self.save_configs(self.default_settings)
+        if return_repo:
+            return self.repository
 
     def save_configs(self, cfgs):
         """TODO"""

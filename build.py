@@ -2,6 +2,7 @@ import platform
 import os
 from pathlib import Path
 from build import WinBuilt
+from build import CommitifyConfig
 
 WINDOWS = "Windows"
 LINUX = "Linux"
@@ -14,14 +15,20 @@ def main():
 
     install_requirements()
 
+    config = CommitifyConfig()
+
+    repo = config.ask_configs(return_repo=True)
+
     MAIN = COMMITIFY / "file" / "main.py"
 
     if user_system_using(WINDOWS):
 
         builder = WinBuilt()
         builder.set_root()
-
+        builder.init_repo(repo)
         builder.set_startup(file=MAIN)
+
+        builder.set_files()
 
     if user_system_using(LINUX):
 
@@ -32,13 +39,6 @@ def main():
 
         # DARWING SYSTEM LOGIC HERE
         pass
-
-
-def ask_configs():
-    repository = input("Repository URL: ")
-    branch = lower(input("Branch (master will be used if left blank): "))
-    commits = int(input("Daily commits (Maximum 100): "))
-    file = lower(input("type of file (py, js, rs, txt):")).replace(".", "")
 
 
 def user_system_using(user_os):
