@@ -10,7 +10,7 @@ class WinBuilt:
         """TODO"""
         self.root_dir = Path.home()
         self.commitify_folder = Path(__file__).parents[1]
-        self.commitify_foldername = "Commitify"
+        self.foldername = "Commitify"
         self.startup_dir = (
             self.root_dir
             / "AppData"
@@ -24,12 +24,13 @@ class WinBuilt:
 
     def commitify_exists(self):
         """TODO"""
-        return os.path.exists(self.root_dir / self.commitify_foldername)
+        return os.path.exists(self.root_dir / self.foldername)
 
     def set_root(self):
         """TODO"""
         if not self.commitify_exists():
-            os.makedirs(self.commitify_foldername)
+            os.makedirs(self.root_dir / self.foldername)
 
     def set_startup(self, file):
-        shutil.move(self.commitify_foler / file, self.startup_dir)
+        """TODO"""
+        shutil.move(self.commitify_folder / file, self.startup_dir)
