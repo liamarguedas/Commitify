@@ -1,12 +1,12 @@
 from pathlib import Path
 import random
 import os
+import json
 
 
 class FileBuilder:
 
-    def __init__(self, filetype="py"):
-        self.filetype = filetype
+    def __init__(self):
         self.filepath = Path(__file__)
         self.txt_path = self.filepath / "txt"
         self.words_file = self.txt_path / "random_words.txt"
@@ -14,6 +14,7 @@ class FileBuilder:
         self.words = self.read_text(self.words_file)
         self.file_text = self.read_text(self.file_txt)
         self.filename = None
+        self.filetype = self.read_filetype()
 
     @staticmethod
     def path_exists(dirname):
@@ -37,6 +38,11 @@ class FileBuilder:
         with open(filename, "w", encoding="utf-8") as file:
             for line in file:
                 file.write(line)
+
+    def read_filetype(self):
+        """TODO"""
+        with open(self.filepath / "cfg" / "config.json", "r", encoding="utf-8") as file:
+            return json.load(file)["file"]
 
     def file_in_path(self, dirname):
         """TODO"""
