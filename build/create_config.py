@@ -1,4 +1,5 @@
 from pathlib import Path
+import random
 import json
 
 
@@ -11,7 +12,7 @@ class CommitifyConfig:
         # defaults
         self.repository = None
         self.branch = "master"
-        self.commits = 10
+        self.commits = self.random_commits()
         self.file = "py"
         self.default_settings = {
             "repository": self.repository,
@@ -20,12 +21,17 @@ class CommitifyConfig:
             "file": self.file,
         }
 
+    @staticmethod
+    def random_commits(n=20):
+        """TODO"""
+        return random.randint(2, n)
+
     def ask_configs(self, return_repo=False):
         """TODO"""
         try:
             self.repository = input("Repository URL: ")
             self.branch = input("Branch (master will be used if blank): ").lower()
-            self.commits = int(input("Daily commits (Maximum 100): "))
+            self.commits = int(input("Daily commits (random daily commits if blank): "))
             self.file = (
                 input("type of file (py, js, rs, txt):").replace(".", "").lower()
             )
@@ -35,14 +41,16 @@ class CommitifyConfig:
                 "commits": self.commits,
                 "file": self.file,
             }
+            if return_repo:
+                return self.repository
 
         except Exception as e:
             print(e)
             print(f"could not save configs, using defaults: {self.default_settings}")
             self.repository = input("Repository URL: ")
-        self.save_configs(self.default_settings)
-        if return_repo:
-            return self.repository
+            self.save_configs(self.default_settings)
+            if return_repo:
+                return self.repository
 
     def save_configs(self, cfgs):
         """TODO"""
