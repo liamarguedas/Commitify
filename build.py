@@ -25,10 +25,10 @@ def main():
 
         builder = WinBuilt()
         builder.set_root()
-        builder.init_repo(repo)
+        builder.config_repo(repo)
         builder.set_startup(file=MAIN)
 
-        builder.set_files()
+        builder.move_files()
 
     if user_system_using(LINUX):
 
