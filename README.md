@@ -2,6 +2,6 @@
 
 in dev:
 
-Windows: 85%%
-Linux: 45%
-Darwing: 30%
+Windows: 95%
+Linux: 70%
+Darwing: 50%
