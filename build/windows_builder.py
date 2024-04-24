@@ -12,6 +12,7 @@ class WinBuilt:
         self.root_dir = Path.home()
         self.commitify_folder = Path(__file__).parents[1]
         self.foldername = "Commitify"
+        self.root_commitify = self.root_dir / self.foldername
         self.startup_dir = (
             self.root_dir
             / "AppData"
@@ -23,35 +24,38 @@ class WinBuilt:
             / "Startup"
         )
 
+    def create_startup_script():
+        pass
+
     def init_repo(self):
         """TODO"""
         command = "git init"
-        process = subprocess.Popen(command, cwd=self.root_dir / self.foldername)
+        process = subprocess.Popen(command, cwd=self.root_commitify)
         process.wait()
 
     def config_repo(self, repo):
         """TODO"""
         self.init_repo()
         command = f"git remote add origin {repo}"
-        process = subprocess.Popen(command, cwd=self.root_dir / self.foldername)
+        process = subprocess.Popen(command, cwd=self.root_commitify)
         process.wait()
 
     def commitify_exists(self):
         """TODO"""
-        return os.path.exists(self.root_dir / self.foldername)
+        return os.path.exists(self.root_commitify)
 
     def exists_in_commitify(self, path):
         """TODO"""
-        return os.path.exists(self.root_dir / self.foldername / path)
+        return os.path.exists(self.root_commitify / path)
 
     def commitify_dir(self, path):
         """TODO"""
-        os.makedirs(self.root_dir / self.foldername / path)
+        os.makedirs(self.root_commitify / path)
 
     def set_root(self):
         """TODO"""
         if not self.commitify_exists():
-            os.makedirs(self.root_dir / self.foldername)
+            os.makedirs(self.root_commitify)
 
     def set_startup(self, file):
         """TODO"""
@@ -64,4 +68,5 @@ class WinBuilt:
         if not self.exists_in_commitify("file"):
             self.commitify_dir("file")
 
-        shutil.move(self.commitify_folder / "src", self.root_dir / self.foldername)
+        shutil.move(self.commitify_folder / "src", self.root_commitify)
+        shutil.move(self.commitify_folder / "file" / "main.py", self.root_commitify)
