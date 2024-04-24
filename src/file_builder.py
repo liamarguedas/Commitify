@@ -60,7 +60,7 @@ class FileBuilder:
                 return [line.rstrip("\n") for line in loaded_file.readlines()]
         return ["file"]
 
-    def create_file(self, dirname: str):
+    def create_file(self, dirname):
         """TODO"""
         if self.path_exists(dirname):
             file = self.generate_name()
