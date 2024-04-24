@@ -24,8 +24,11 @@ class WinBuilt:
             / "Startup"
         )
 
-    def create_startup_script():
-        pass
+    def create_startup_script(self):
+        """TODO"""
+        main = self.root_commitify / "main.py"
+        with open(self.root_dir / "Commitify.bat", "w", encoding="utf-8") as file:
+            file.write(f"python {main}")
 
     def init_repo(self):
         """TODO"""
