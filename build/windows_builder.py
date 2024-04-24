@@ -39,6 +39,10 @@ class WinBuilt:
     def config_repo(self, repo):
         """TODO"""
         self.init_repo()
+
+        if not repo[-4:] == ".git":
+            repo = f"{repo}.git"
+
         command = f"git remote add origin {repo}"
         process = subprocess.Popen(command, cwd=self.root_commitify)
         process.wait()
@@ -59,10 +63,6 @@ class WinBuilt:
         """TODO"""
         if not self.commitify_exists():
             os.makedirs(self.root_commitify)
-
-    def set_startup(self, file):
-        """TODO"""
-        shutil.move(self.commitify_folder / file, self.startup_dir)
 
     def move_files(self):
         """TODO"""

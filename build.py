@@ -13,21 +13,20 @@ COMMITIFY = Path(__file__).parents[0]
 def main():
     """TODO"""
 
+    print("Installing requirements...")
     install_requirements()
 
     config = CommitifyConfig()
 
+    print("Commitify configuration")
     repo = config.ask_configs(return_repo=True)
-
-    MAIN = COMMITIFY / "file" / "main.py"
 
     if user_system_using(WINDOWS):
 
         builder = WinBuilt()
         builder.set_root()
         builder.config_repo(repo)
-        builder.set_startup(file=MAIN)
-
+        builder.create_startup_script()
         builder.move_files()
 
     if user_system_using(LINUX):
