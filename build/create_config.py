@@ -1,5 +1,4 @@
 from pathlib import Path
-import random
 import json
 
 
@@ -9,55 +8,43 @@ class CommitifyConfig:
     def __init__(self):
         """TODO"""
         self.cfg_dir = Path(__file__).parents[1] / "src" / "cfg"
-        # defaults
         self.repository = None
         self.branch = "master"
-        self.commits = self.random_commits()
+        self.commits = ""
         self.file = "py"
-        self.default_settings = {
+
+    def load_settings(self):
+        """TODO"""
+        return {
             "repository": self.repository,
             "branch": self.branch,
             "commits": self.commits,
             "file": self.file,
         }
 
-    @staticmethod
-    def random_commits(n=20):
-        """TODO"""
-        return random.randint(2, n)
-
     def ask_configs(self, return_repo=False):
         """TODO"""
         try:
             self.repository = input("Repository URL: ")
-            self.branch = input("Branch (master will be used if blank): ").lower()
-            self.commits = int(input("Daily commits (random daily commits if blank): "))
-            self.file = (
-                input("type of file (py, js, rs, txt):").replace(".", "").lower()
-            )
-            self.default_settings = {
-                "repository": self.repository,
-                "branch": self.branch,
-                "commits": self.commits,
-                "file": self.file,
-            }
-            if return_repo:
-                return self.repository
+            self.branch = input("Branch (Default: master): ")
+            self.commits = input("Number of Daily commits (Default: Random): ")
+            self.file = input("Commit File type (Default: py): ")
 
         except Exception as e:
             print(e)
-            print(f"could not save configs, using defaults: {self.default_settings}")
+            print("could not save configs")
             self.repository = input("Repository URL: ")
-            self.save_configs(self.default_settings)
-            if return_repo:
-                return self.repository
+
+        configs = self.load_settings()
+
+        self.save_configs(configs)
+
+        print(f"Settings saved: {configs}")
+
+        if return_repo:
+            return self.repository
 
     def save_configs(self, cfgs):
         """TODO"""
-        try:
-            with open(self.cfg_dir / "config.json", "w") as file:
-                json.dump(cfgs, file)
-
-        except Exception as e:
-            print(e)
-            print(f"could not save configs, using defaults: {self.default_settings}")
+        with open(self.cfg_dir / "config.json", "w", encoding="utf-8") as file:
+            json.dump(cfgs, file)

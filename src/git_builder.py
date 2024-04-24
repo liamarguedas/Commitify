@@ -3,8 +3,11 @@
 
 from pathlib import Path
 import os
+import random
 import json
 from .comment_builder import CommentBuilder
+
+BLANK = ""
 
 
 class GitBuilder(CommentBuilder):
@@ -17,12 +20,29 @@ class GitBuilder(CommentBuilder):
         self.cfgs = self.read_configs()
         self.branch = self.cfgs.branch
         self.files = files
-        self.number_of_commits = self.cfgs.commits
+        self.number_of_commits = self.load_commits()
+
+    @staticmethod
+    def random_commits(n=25):
+        """TODO"""
+        return random.randint(1, n)
 
     def read_configs(self):
         """TODO"""
         with open(self.filepath / "cfg" / "config.json", "r", encoding="utf-8") as file:
             return json.load(file)
+
+    def load_commits(self):
+        """TODO"""
+        if not self.cfgs.commits == BLANK:
+            try:
+                return int(self.cfgs.commits)
+
+            except Exception as e:
+                print(e)
+                print("Could not read commits, using random commits")
+
+        return self.random_commits()
 
     def add(self):
         """TODO"""
