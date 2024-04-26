@@ -3,5 +3,5 @@
 in dev:
 
 Windows: 95%
-Linux: 70%
-Darwing: 50%
+Linux: 75%
+Darwing: 55%
