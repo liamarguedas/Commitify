@@ -24,6 +24,31 @@ class WinBuilt:
             / "Startup"
         )
 
+    def verify_installation(self):
+        """ TODO """
+        pass
+
+
+    def unbuild_installation(self):
+        if self.verify_previous_installation():
+            pass
+
+    def uninstall_files(self):
+        
+        # REMOVE STARTUP FILES
+        os.remove(self.root_dir + "Commitify.bat")
+
+        # REMOVE ROOT FILES
+        os.remove(self.root_commitify)
+
+        # VERIFICAR QUE SE DESINSTALÓ
+
+
+
+    def verify_previous_installation(self):
+        """TODO"""
+        return os.path.exists(self.root_commitify) and os.path.exists(self.root_dir + "Commitify.bat"):
+
     def create_startup_script(self):
         """TODO"""
         main = self.root_commitify / "main.py"
