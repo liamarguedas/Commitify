@@ -4,4 +4,4 @@ in dev:
 
 Windows: 95%
 Linux: 75%
-Darwing: 55%
+Darwing: 85%
