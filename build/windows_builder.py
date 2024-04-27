@@ -3,6 +3,8 @@ import subprocess
 import shutil
 from pathlib import Path
 
+GIT_EXTENSION = ".git"
+
 
 class WinBuilt:
     """TODO"""
@@ -24,53 +26,33 @@ class WinBuilt:
             / "Startup"
         )
 
-    def verify_installation(self):
-        """ TODO """
-        pass
-
-
-    def unbuild_installation(self):
-        if self.verify_previous_installation():
-            pass
-
-    def uninstall_files(self):
-        
-        # REMOVE STARTUP FILES
-        os.remove(self.root_dir + "Commitify.bat")
-
-        # REMOVE ROOT FILES
-        os.remove(self.root_commitify)
-
-        # VERIFICAR QUE SE DESINSTALÓ
-
-
-
-    def verify_previous_installation(self):
+    def uninstall_windows_files(self):
         """TODO"""
-        return os.path.exists(self.root_commitify) and os.path.exists(self.root_dir + "Commitify.bat"):
+        if self.commitify_exists():
+            shutil.rmtree(self.root_commitify)
+        if os.path.exists(self.startup_dir / "Commitify.bat"):
+            os.remove(self.startup_dir / "Commitify.bat")
 
     def create_startup_script(self):
         """TODO"""
         main = self.root_commitify / "main.py"
-        with open(self.root_dir / "Commitify.bat", "w", encoding="utf-8") as file:
+        with open(self.startup_dir / "Commitify.bat", "w", encoding="utf-8") as file:
             file.write(f"python {main}")
 
     def init_repo(self):
         """TODO"""
         command = "git init"
-        process = subprocess.Popen(command, cwd=self.root_commitify)
-        process.wait()
+        with subprocess.Popen(command, cwd=self.root_commitify) as process:
+            process.wait()
 
     def config_repo(self, repo):
         """TODO"""
         self.init_repo()
-
-        if not repo[-4:] == ".git":
+        if not repo[-4:] == GIT_EXTENSION:
             repo = f"{repo}.git"
-
         command = f"git remote add origin {repo}"
-        process = subprocess.Popen(command, cwd=self.root_commitify)
-        process.wait()
+        with subprocess.Popen(command, cwd=self.root_commitify) as process:
+            process.wait()
 
     def commitify_exists(self):
         """TODO"""
@@ -89,12 +71,14 @@ class WinBuilt:
         if not self.commitify_exists():
             os.makedirs(self.root_commitify)
 
+    def move_main(self):
+        shutil.move(self.commitify_folder / "file" / "main.py", self.commitify_folder)
+
     def move_files(self):
         """TODO"""
         if not self.exists_in_commitify("src"):
-            self.commitify_dir("src")
+            shutil.move(self.commitify_folder / "src", self.root_commitify)
         if not self.exists_in_commitify("file"):
-            self.commitify_dir("file")
+            shutil.move(self.commitify_folder / "file", self.root_commitify)
 
-        shutil.move(self.commitify_folder / "src", self.root_commitify)
-        shutil.move(self.commitify_folder / "file" / "main.py", self.root_commitify)
+        self.move_main()
