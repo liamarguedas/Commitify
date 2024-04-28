@@ -7,7 +7,7 @@ import json
 class FileBuilder:
 
     def __init__(self):
-        self.filepath = Path(__file__)
+        self.filepath = Path(__file__).parents[0]
         self.txt_path = self.filepath / "txt"
         self.words_file = self.txt_path / "random_words.txt"
         self.file_txt = self.txt_path / "file_txt.txt"

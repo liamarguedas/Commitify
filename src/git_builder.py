@@ -16,9 +16,9 @@ class GitBuilder(CommentBuilder):
     def __init__(self, files="."):
         """TODO"""
         super().__init__()
-        self.filepath = Path(__file__)
+        self.filepath = Path(__file__).parents[0]
         self.cfgs = self.read_configs()
-        self.branch = self.cfgs.branch
+        self.branch = self.cfgs["branch"]
         self.files = files
         self.number_of_commits = self.load_commits()
 
@@ -34,9 +34,9 @@ class GitBuilder(CommentBuilder):
 
     def load_commits(self):
         """TODO"""
-        if not self.cfgs.commits == BLANK:
+        if not self.cfgs["commits"] == BLANK:
             try:
-                return int(self.cfgs.commits)
+                return int(self.cfgs["commits"])
 
             except Exception as e:
                 print(e)

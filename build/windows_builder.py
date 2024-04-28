@@ -37,6 +37,7 @@ class WinBuilt:
         """TODO"""
         main = self.root_commitify / "main.py"
         with open(self.startup_dir / "Commitify.bat", "w", encoding="utf-8") as file:
+            file.write("@echo off\n")
             file.write(f"python {main}")
 
     def init_repo(self):
