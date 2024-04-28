@@ -72,7 +72,7 @@ class WinBuilt:
             os.makedirs(self.root_commitify)
 
     def move_main(self):
-        shutil.move(self.commitify_folder / "file" / "main.py", self.commitify_folder)
+        shutil.move(self.root_commitify / "file" / "main.py", self.root_commitify)
 
     def move_files(self):
         """TODO"""
