@@ -6,14 +6,8 @@ from src import GitBuilder
 
 def main():
     """TODO"""
-    PATH = Path(__file__) / "file"
-
-    # build file
-    file = FileBuilder()
-    file.create_file(dirname=PATH)
-
-    # add, commit then push file to repo
-    git = GitBuilder()
+    PATH = Path(__file__).parents[0] / "file"
+    git = GitBuilder(diretory=PATH)
     git.execute()
 
 

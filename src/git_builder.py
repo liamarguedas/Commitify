@@ -66,6 +66,7 @@ class GitBuilder(CommentBuilder):
     def execute(self):
         """TODO"""
         for _ in range(self.number_of_commits):
+            print(f"Executing {self.number_of_commits} commits")
             _comment = self.commit_message()
             self.add()
             self.commit(message=_comment)

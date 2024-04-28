@@ -32,17 +32,18 @@ class FileBuilder:
         ]
         return f"{_splited_file[0]}{len(same_name_files) + 1}.{_splited_file[1]}"
 
-    @staticmethod
-    def write_new_file(filename):
+    def write_new_file(self, filename):
         """TODO"""
         with open(filename, "w", encoding="utf-8") as file:
-            for line in file:
-                file.write(line)
+            for line in self.file_text:
+                file.write(f"{line}\n")
 
     def read_filetype(self):
         """TODO"""
         with open(self.filepath / "cfg" / "config.json", "r", encoding="utf-8") as file:
-            return json.load(file)["file"]
+
+            file_type = json.load(file)["file"]
+            return file_type
 
     def file_in_path(self, dirname):
         """TODO"""
@@ -66,4 +67,4 @@ class FileBuilder:
             file = self.generate_name()
             if self.file_in_path(dirname):
                 file = self.generate_extra_file(file, dirname)
-            self.write_new_file(file)
+            self.write_new_file(dirname / file)
