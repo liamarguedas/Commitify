@@ -2,25 +2,28 @@
 # License: BSD 3 clause
 
 from pathlib import Path
-import os
 import random
+import subprocess
 import json
+import time
 from .comment_builder import CommentBuilder
+from .file_builder import FileBuilder
 
 BLANK = ""
 
 
-class GitBuilder(CommentBuilder):
+class GitBuilder:
     """TODO"""
 
-    def __init__(self, files="."):
+    def __init__(self, diretory, files="."):
         """TODO"""
-        super().__init__()
+        self.comment_generator = CommentBuilder()
+        self.diretory = diretory
+        self.file_generator = FileBuilder()
         self.filepath = Path(__file__).parents[0]
         self.cfgs = self.read_configs()
         self.branch = self.cfgs["branch"]
         self.files = files
-        self.number_of_commits = self.load_commits()
 
     @staticmethod
     def random_commits(n=25):
@@ -32,7 +35,7 @@ class GitBuilder(CommentBuilder):
         with open(self.filepath / "cfg" / "config.json", "r", encoding="utf-8") as file:
             return json.load(file)
 
-    def load_commits(self):
+    def get_commits_number(self):
         """TODO"""
         if not self.cfgs["commits"] == BLANK:
             try:
@@ -46,28 +49,28 @@ class GitBuilder(CommentBuilder):
 
     def add(self):
         """TODO"""
-        query_to_send = f"git add {self.files}"
-        os.system(query_to_send)
-
-    def commit_message(self):
-        """TODO"""
-        return self.comment()
+        command = "git add ."
+        with subprocess.Popen(command, cwd=self.filepath) as process:
+            process.wait()
+            time.sleep(1)
 
     def commit(self, message: str):
         """TODO"""
-        query_to_send = f"git commit -m {message}"
-        os.system(query_to_send)
+        command = f'git commit -m "{message}"'
+        with subprocess.Popen(command, cwd=self.filepath) as process:
+            process.wait()
+            time.sleep(1)
 
     def push(self):
         """TODO"""
-        query_to_send = f"git push origin {self.branch}"
-        os.system(query_to_send)
+        command = f"git push origin {self.branch}"
+        with subprocess.Popen(command, cwd=self.filepath) as process:
+            process.wait()
 
     def execute(self):
         """TODO"""
-        for _ in range(self.number_of_commits):
-            print(f"Executing {self.number_of_commits} commits")
-            _comment = self.commit_message()
-            self.add()
-            self.commit(message=_comment)
-            self.push()
+        self.file_generator.create_file(self.diretory)
+        _comment = self.comment_generator.comment()
+        self.add()
+        self.commit(message=_comment)
+        self.push()
