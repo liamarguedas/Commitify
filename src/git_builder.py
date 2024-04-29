@@ -63,14 +63,14 @@ class GitBuilder:
 
     def push(self):
         """TODO"""
-        command = f"git push origin {self.branch}"
+        command = f"git push origin -u {self.branch}"
         with subprocess.Popen(command, cwd=self.filepath) as process:
             process.wait()
 
     def execute(self):
         """TODO"""
         self.file_generator.create_file(self.diretory)
-        _comment = self.comment_generator.comment()
+        comment = self.comment_generator.comment()
         self.add()
-        self.commit(message=_comment)
+        self.commit(message=comment)
         self.push()

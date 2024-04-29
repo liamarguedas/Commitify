@@ -46,12 +46,17 @@ class WinBuilt:
         with subprocess.Popen(command, cwd=self.root_commitify) as process:
             process.wait()
 
-    def config_repo(self, repo):
+    def config_repo(self, repo, branch):
         """TODO"""
         self.init_repo()
         if not repo[-4:] == GIT_EXTENSION:
             repo = f"{repo}.git"
         command = f"git remote add origin {repo}"
+        with subprocess.Popen(command, cwd=self.root_commitify) as process:
+            process.wait()
+
+        command = f"git checkout {branch}"
+
         with subprocess.Popen(command, cwd=self.root_commitify) as process:
             process.wait()
 

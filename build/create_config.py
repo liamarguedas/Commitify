@@ -22,7 +22,7 @@ class CommitifyConfig:
             "file": self.file,
         }
 
-    def ask_configs(self, return_repo=False):
+    def ask_configs(self, return_repo_info=False):
         """TODO"""
         try:
             self.repository = input("Repository URL: ")
@@ -41,8 +41,8 @@ class CommitifyConfig:
 
         print(f"Settings saved: {configs}")
 
-        if return_repo:
-            return self.repository
+        if return_repo_info:
+            return self.repository, self.branch
 
     def save_configs(self, cfgs):
         """TODO"""

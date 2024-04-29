@@ -19,13 +19,13 @@ def main():
     config = CommitifyConfig()
 
     print("Commitify configuration")
-    repo = config.ask_configs(return_repo=True)
+    repo, branch = config.ask_configs(return_repo_info=True)
 
     if user_system_using(WINDOWS):
 
         builder = WinBuilt()
         builder.set_root()
-        builder.config_repo(repo)
+        builder.config_repo(repo, branch)
         builder.create_startup_script()
         builder.move_files()
 
