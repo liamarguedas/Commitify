@@ -31,11 +31,13 @@ def main():
 
     if user_system_using(LINUX):
 
+        # TODO
         # LINUX SYSTEM LOGIC HERE
         pass
 
     if user_system_using(MACOS):
 
+        # TODO
         # DARWING SYSTEM LOGIC HERE
         pass
 
