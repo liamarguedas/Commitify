@@ -52,18 +52,16 @@ class GitBuilder:
         command = "git add ."
         with subprocess.Popen(command, cwd=self.filepath) as process:
             process.wait()
-            time.sleep(1)
 
     def commit(self, message: str):
         """TODO"""
         command = f'git commit -m "{message}"'
         with subprocess.Popen(command, cwd=self.filepath) as process:
             process.wait()
-            time.sleep(1)
 
     def push(self):
         """TODO"""
-        command = f"git push origin -u {self.branch}"
+        command = f"git push origin {self.branch}"
         with subprocess.Popen(command, cwd=self.filepath) as process:
             process.wait()
 

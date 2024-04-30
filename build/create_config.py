@@ -42,7 +42,7 @@ class CommitifyConfig:
         print(f"Settings saved: {configs}")
 
         if return_repo_info:
-            return self.repository, self.branch
+            return self.repository
 
     def save_configs(self, cfgs):
         """TODO"""
