@@ -3,7 +3,7 @@
 
 from pathlib import Path
 import random
-import subprocess
+import os
 import json
 import time
 from .comment_builder import CommentBuilder
@@ -50,20 +50,17 @@ class GitBuilder:
     def add(self):
         """TODO"""
         command = "git add ."
-        with subprocess.Popen(command, cwd=self.filepath) as process:
-            process.wait()
+        os.system(command)
 
     def commit(self, message: str):
         """TODO"""
         command = f'git commit -m "{message}"'
-        with subprocess.Popen(command, cwd=self.filepath) as process:
-            process.wait()
+        os.system(command)
 
     def push(self):
         """TODO"""
         command = f"git push origin {self.branch}"
-        with subprocess.Popen(command, cwd=self.filepath) as process:
-            process.wait()
+        os.system(command)
 
     def execute(self):
         """TODO"""

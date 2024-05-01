@@ -1,6 +1,8 @@
 from pathlib import Path
 import json
 
+BLANK = ""
+
 
 class CommitifyConfig:
     """TODO"""
@@ -15,11 +17,13 @@ class CommitifyConfig:
 
     def load_settings(self):
         """TODO"""
+        if self.repository == BLANK:
+            print("Repository not detected, please reconfigure: ")
         return {
             "repository": self.repository,
-            "branch": self.branch,
+            "branch": "master" if self.branch == BLANK else self.branch,
             "commits": self.commits,
-            "file": self.file,
+            "file": "py" if self.file == BLANK else self.file,
         }
 
     def ask_configs(self, return_repo_info=False):

@@ -25,9 +25,10 @@ def main():
 
         builder = WinBuilt()
         builder.set_root()
-        builder.config_repo(repo)
+        builder.create_git_bat(repo)
         builder.create_startup_script()
         builder.move_files()
+        builder.config_repo()
 
     if user_system_using(LINUX):
 

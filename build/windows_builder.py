@@ -1,9 +1,11 @@
 import os
-import subprocess
 import shutil
 from pathlib import Path
+from subprocess import Popen
 
 GIT_EXTENSION = ".git"
+GIT_BAT = "git_setup.bat"
+COMMITIFY_BAT = "Commitify.bat"
 
 
 class WinBuilt:
@@ -30,32 +32,37 @@ class WinBuilt:
         """TODO"""
         if self.commitify_exists():
             shutil.rmtree(self.root_commitify)
-        if os.path.exists(self.startup_dir / "Commitify.bat"):
-            os.remove(self.startup_dir / "Commitify.bat")
+
+        if os.path.exists(self.startup_dir / COMMITIFY_BAT):
+            os.remove(self.startup_dir / COMMITIFY_BAT)
 
     def create_startup_script(self):
         """TODO"""
         main = self.root_commitify / "main.py"
-        with open(self.startup_dir / "Commitify.bat", "w", encoding="utf-8") as file:
+        with open(self.startup_dir / COMMITIFY_BAT, "w", encoding="utf-8") as file:
             file.write("@echo off\n")
             file.write(f"python {main}")
 
-    def init_repo(self):
+    def create_git_bat(self, repo):
         """TODO"""
-        print("init local repository")
-        command = "git init"
-        with subprocess.Popen(command, cwd=self.root_commitify) as process:
-            process.wait()
-
-    def config_repo(self, repo):
-        """TODO"""
-        self.init_repo()
         if not repo[-4:] == GIT_EXTENSION:
             repo = f"{repo}.git"
-        print(f"adding remote origin at {repo}")
         command = f"git remote add origin {repo}"
-        with subprocess.Popen(command, cwd=self.root_commitify) as process:
-            process.wait()
+        with open(self.commitify_folder / GIT_BAT, "w", encoding="utf-8") as file:
+            file.write("@echo off\n")
+            file.write(f"cd {self.root_commitify}\n")
+            file.write("git init\n")
+            file.write(command)
+
+    def config_repo(self):
+        """TODO"""
+        with Popen(self.commitify_folder / GIT_BAT) as process:
+            process.communicate()
+        self.delete_git_bat()
+
+    def delete_git_bat(self):
+        """TODO"""
+        os.remove(self.commitify_folder / GIT_BAT)
 
     def commitify_exists(self):
         """TODO"""
