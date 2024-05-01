@@ -7,7 +7,7 @@
 ![language (Bash)](https://img.shields.io/badge/language-Bash-green)
 ![license](https://img.shields.io/badge/license-GPL--3.0-yellow)
 
-#### What is a Commitify?
+#### What is Commitify?
 
 Commitify is a user-friendly tool designed to simplify the process of making commits on GitHub, helping developers maintain a consistent and active presence on their repositories. With Commitify, you can effortlessly manage your commit history, ensuring that your GitHub profile reflects your ongoing contributions and dedication to your projects.
 ___
