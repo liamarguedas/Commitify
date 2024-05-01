@@ -1,14 +1,33 @@
+"""
+Commitify - Fake Commit Generator for GitHub
+
+Copyright (C) 2024-2024 Liam Arguedas
+
+This file is part of Commitify, a free CLI tool designed to generate fake commits
+for GitHub repositories.
+
+Commitify is distributed under the terms of the GNU General Public License (GPL),
+either version 3 of the License, or any later version.
+
+Commitify is provided "as is", without warranty of any kind, express or implied,
+including but not limited to the warranties of merchantability, fitness for a
+particular purpose, and noninfringement. See the GNU General Public License for
+more details.
+
+You should have received a copy of the GNU General Public License along with
+Commitify. If not, see <https://www.gnu.org/licenses/>.
+"""
+
 from pathlib import Path
 import json
+
 
 BLANK = ""
 
 
 class CommitifyConfig:
-    """TODO"""
 
     def __init__(self):
-        """TODO"""
         self.cfg_dir = Path(__file__).parents[1] / "src" / "cfg"
         self.repository = None
         self.branch = "master"
@@ -16,7 +35,6 @@ class CommitifyConfig:
         self.file = "py"
 
     def load_settings(self):
-        """TODO"""
         if self.repository == BLANK:
             print("Repository not detected, please reconfigure: ")
         return {
@@ -27,7 +45,6 @@ class CommitifyConfig:
         }
 
     def ask_configs(self, return_repo_info=False):
-        """TODO"""
         try:
             self.repository = input("Repository URL: ")
             self.branch = input("Branch (Default: master): ")
@@ -43,12 +60,18 @@ class CommitifyConfig:
 
         self.save_configs(configs)
 
-        print(f"Settings saved: {configs}")
+        print("SETTINGS: Loaded ----------- ")
+        print(f'Repository: {configs["repository"]}')
+        print(f'Branch: {configs["branch"]}')
+        print(
+            f'Commits: {"random" if configs["commits"] == BLANK else configs["commits"]}'
+        )
+        print(f'File: {configs["file"]}')
 
+        print("-----------------------------")
         if return_repo_info:
             return self.repository
 
     def save_configs(self, cfgs):
-        """TODO"""
         with open(self.cfg_dir / "config.json", "w", encoding="utf-8") as file:
             json.dump(cfgs, file)
