@@ -67,4 +67,3 @@ class FileBuilder:
             file = self.generate_name()
             if self.file_in_path(dirname):
                 file = self.generate_extra_file(file, dirname)
-            self.write_new_file(dirname / file)

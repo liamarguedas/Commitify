@@ -38,10 +38,10 @@ class WinBuilt:
 
     def create_startup_script(self):
         """TODO"""
-        main = self.root_commitify / "main.py"
         with open(self.startup_dir / COMMITIFY_BAT, "w", encoding="utf-8") as file:
             file.write("@echo off\n")
-            file.write(f"python {main}")
+            file.write(f"cd {self.root_commitify}\n")
+            file.write("python main.py")
 
     def create_git_bat(self, repo):
         """TODO"""
